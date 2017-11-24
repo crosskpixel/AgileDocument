@@ -6,6 +6,7 @@ var multipartMiddle = multipart();
 var path = require('./../utils/GeradorDePastas.js');
 var fs = require('fs');
 var qrCode = require('qrcode-npm');
+
 module.exports = function (app) {
     //Gera um novo documento de acordo com o parametro de modelo: e retorna os campos
     // com seus identificadores, logo aós isso ,faça o envio para ???
@@ -97,7 +98,6 @@ module.exports = function (app) {
 
     app.post('/sendFile/:identificadorArquivo', multipartMiddle, function (req, res) {
         var identificador = req.params.identificadorArquivo;
-
         try {
             var extension = path.defineExtesionFile(req.files);
 
@@ -110,31 +110,27 @@ module.exports = function (app) {
                         if (documento === null) {
                             res.send('Documento não encontrado');
                         } else {
-
                             var destDestiny = '/ARQUIVOS/Documentos/' + now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + nameFile + extension;
-                            var source = fs.createReadStream(req.files.file.path);
-                            var dest = fs.createWriteStream(req.ROOT_PATH + destDestiny);
 
-                            source.pipe(dest);
-                            source.on('end', function () {
-                                console.log('COPY SUCCESSFULL !!!!');
-                            });
-                            source.on('error', function (err) {
-                                console.log(err);
-                                res.send(err);
-                            });
-
-                            //persist;,
-                            db.arquivo.update({
-                                arquivo: destDestiny
-                            }, {
-                                    where: {
-                                        id: documento.id
-                                    }
-                                }).then(arquivo => {
-                                    console.log(arquivo);
-                                    res.send('true');
-                                });
+                             var source = fs.createReadStream(req.files.file.path);
+                             var dest = fs.createWriteStream(req.ROOT_PATH + destDestiny);
+ 
+                             source.pipe(dest);
+                             source.on('end', function () {
+                                 console.log('COPY SUCCESSFULL !!!!');
+                                 db.arquivo.update({
+                                    arquivo: destDestiny
+                                }, {
+                                        where: {
+                                            id: documento.id
+                                        }
+                                    });
+                                res.send("true");
+                             });
+                             source.on('error', function (err) {
+                                 console.log(err);
+                                 res.send(err);
+                             }); 
                         }
                     }
                 });
@@ -145,9 +141,7 @@ module.exports = function (app) {
 
     });
 
-
     app.get('/getFile/:identificadorArquivo', function (req, res) {
-
         db.arquivo.findOne({
             where: {
                 identificador: req.params.identificadorArquivo
@@ -160,7 +154,32 @@ module.exports = function (app) {
                 res.sendFile(req.ROOT_PATH + arquivo.arquivo);
             }
         });
-
     });
 
+    app.get('/getFileLow/:identificadorArquivo', function (req, res) {
+        db.arquivo.findOne({
+            where: {
+                identificador: req.params.identificadorArquivo
+            }
+        }).then(arquivo => {
+            console.log(arquivo);
+            if (arquivo == null) {
+                res.send('false');
+            } else {
+                var file = fs.readFileSync(req.ROOT_PATH + arquivo.arquivo);
+                jimp.read(file, function (err, fileR) {
+                    if (err) {
+                        throw err;
+                    }
+                    var fileTemp = tempWrite.sync((Math.random() * (1000 - 1) + 1).toString());
+                    fileTemp += ".jpg";
+                    console.log(fileTemp);
+                    fileR.quality(9)
+                        .write(fileTemp, function () {
+                            res.sendFile(fileTemp);
+                        });
+                });
+            }
+        });
+    });
 }

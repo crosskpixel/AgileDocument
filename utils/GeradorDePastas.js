@@ -59,9 +59,11 @@ module.exports.defineExtesionFile = function (reqFiles) {
         return '.png';
     } else if (type === 'image/jpg') {
         return '.jpg';
-    } else if (type === 'image/**' ){
+    } else if (type === 'image/**') {
         return '.jpg';
-    }else {
+    } else if (type === "application/octet-stream") {
+        return ".jpg"
+    } else {
         throw new Error('Formato de Arquivo Invalido !!!');
     }
 }

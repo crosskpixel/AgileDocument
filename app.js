@@ -42,6 +42,10 @@ load('controller')
   .then('routes')
   .into(app);
 
+  app.get("/connect",function(req,res){
+      res.send("true");
+  });
+
   app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
