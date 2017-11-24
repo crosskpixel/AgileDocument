@@ -1,0 +1,9 @@
+
+docker run --name agileDB -e MYSQL_DATABASE=agile \
+ -e MYSQL_USER=agileuser \
+ -e MYSQL_PASSWORD=agilepassword \
+ -e MYSQL_DATABASE=agile \
+ -e MYSQL_ROOT_PASSWORD=agilerootz \
+ -e MYSQL_RANDOM_ROOT_PASSWORD=no \
+ -e MYSQL_ALLOW_EMPTY_PASSWORD=no \
+ -p 3306:3306 -d mariadb

@@ -1,8 +1,8 @@
 var path = require('path');
 var fs = require('fs');
 var Sequelize = require('sequelize');
-const sequelize = new Sequelize('macImage', 'mactus', 'macinfo', {	//configuracao do banco de dados
-    host: '192.168.1.105',
+const sequelize = new Sequelize('agile', 'agileuser', 'agilepassword', {	//configuracao do banco de dados
+    host: 'agileDB',
     dialect: 'mysql',
     pool: {
         max: 5,

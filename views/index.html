@@ -130,6 +130,11 @@
                 data: objForSend,
                 success: function (result) {
                     console.log(result);
+                    if(result === "true"){
+                        $("#modelo_nome").text("");
+                        $("#modelo_id").text("");
+                        window.location.reload();
+                    }
                 }
             });
 

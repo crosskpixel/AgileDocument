@@ -18,6 +18,9 @@ module.exports = function (app) {
                 identificador: identificadorModelo
             }
         }).then(modelo => {
+            if(modelo.length == 0){
+                res.send("false");
+            }
             var idModelo = modelo[0].id;
             var hashQRCode = gerador.gerarHashPequeno();
 
@@ -61,49 +64,56 @@ module.exports = function (app) {
     });
 
     app.get('/novoDocumentoString/:modeloid', function (req, res) {
-        var identificadorModelo = req.params.modeloid;
-        db.modelo.findAll({
-            where: {
-                identificador: identificadorModelo
-            }
-        }).then(modelo => {
-            var idModelo = modelo[0].id;
-            var hashQRCode = gerador.gerarHashPequeno();
-
-            db.documento.create({
-                modeloId: idModelo,
-                qrCode: hashQRCode
-            }).then(documento => {
-                db.documento.findAll({
-                    where: {
-                        id: documento.id
-                    }
+        try{
+            var identificadorModelo = req.params.modeloid;
+            db.modelo.findAll({
+                where: {
+                    identificador: identificadorModelo
+                }
+            }).then(modelo => {
+                if(modelo.length == 0){
+                    res.send("false");
+                }
+                var idModelo = modelo[0].id;
+                var hashQRCode = gerador.gerarHashPequeno();
+    
+                db.documento.create({
+                    modeloId: idModelo,
+                    qrCode: hashQRCode
                 }).then(documento => {
-                    db.campo.findAll({
+                    db.documento.findAll({
                         where: {
-                            modeloId: documento[0].modeloId
+                            id: documento.id
                         }
-                    }).then(campos => {
-                        for (var key in campos) {
-                            var identificador = gerador.gerarHashPequeno();
-                            db.arquivo.create({
-                                identificador: identificador,
-                                documentoId: documento[0].id,
-                                campoId: campos[key].id
-                            }).then(arquivoAbstrato => {
-                                var arquivo = {
-                                    nome: campos[key].nome,
-                                    identificador: identificador
-                                }
-                            });
-                        }
+                    }).then(documento => {
+                        db.campo.findAll({
+                            where: {
+                                modeloId: documento[0].modeloId
+                            }
+                        }).then(campos => {
+                            for (var key in campos) {
+                                var identificador = gerador.gerarHashPequeno();
+                                db.arquivo.create({
+                                    identificador: identificador,
+                                    documentoId: documento[0].id,
+                                    campoId: campos[key].id
+                                }).then(arquivoAbstrato => {
+                                    var arquivo = {
+                                        nome: campos[key].nome,
+                                        identificador: identificador
+                                    }
+                                });
+                            }
+                        });
                     });
                 });
+                res.send(hashQRCode);
             });
-            res.send(hashQRCode);
-        });
+        }catch(err){
+            res.send(err);
+        }
+      
     });
-
 
     //busca os registros referentes a cada arquivo do documento com um indentificador
     app.get('/getCampos/:qrCodeDocumento', function (req, res) {
@@ -184,30 +194,4 @@ module.exports = function (app) {
         });
     });
 
-   /* app.get('/getFileLow/:identificadorArquivo', function (req, res) {
-        db.arquivo.findOne({
-            where: {
-                identificador: req.params.identificadorArquivo
-            }
-        }).then(arquivo => {
-            console.log(arquivo);
-            if (arquivo == null) {
-                res.send('false');
-            } else {
-                var file = fs.readFileSync(req.ROOT_PATH + arquivo.arquivo);
-                jimp.read(file, function (err, fileR) {
-                    if (err) {
-                        throw err;
-                    }
-                    var fileTemp = tempWrite.sync((Math.random() * (1000 - 1) + 1).toString());
-                    fileTemp += ".jpg";
-                    console.log(fileTemp);
-                    fileR.quality(9)
-                        .write(fileTemp, function () {
-                            res.sendFile(fileTemp);
-                        });
-                });
-            }
-        });
-    });*/
 }

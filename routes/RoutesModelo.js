@@ -50,6 +50,13 @@ module.exports = function (app) {
         });
 
         res.send('true');
-    })
+    });
+
+
+    app.get("/lala",function(req,res){
+        console.log(req.query.campo);
+        
+        res.send(req.params.lala);
+    });
 
 }
