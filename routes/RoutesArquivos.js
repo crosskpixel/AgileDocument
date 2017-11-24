@@ -12,9 +12,7 @@ module.exports = function (app) {
     // com seus identificadores, logo aós isso ,faça o envio para ???
     // e na url ??? ,é possivel pegar a url da imagem
     app.get('/novoDocumento/:modeloid', function (req, res) {
-
         var identificadorModelo = req.params.modeloid;
-
         db.modelo.findAll({
             where: {
                 identificador: identificadorModelo
@@ -52,17 +50,7 @@ module.exports = function (app) {
                         }
                     });
                 });
-
             });
-
-            /* var qr = qrcode.qrcode(4, 'M');
-             qr.addData(hashQRCode);
-             qr.make();
- 
-             qr.createImgTag(4);    // creates an <img> tag as text
-             qr.createTableTag(4);
- 
-             res.send(qr);*/
             var qr = qrCode.qrcode(5, 'M');
             qr.addData(hashQRCode);
             qr.make();
@@ -72,11 +60,54 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/novoDocumentoString/:modeloid', function (req, res) {
+        var identificadorModelo = req.params.modeloid;
+        db.modelo.findAll({
+            where: {
+                identificador: identificadorModelo
+            }
+        }).then(modelo => {
+            var idModelo = modelo[0].id;
+            var hashQRCode = gerador.gerarHashPequeno();
+
+            db.documento.create({
+                modeloId: idModelo,
+                qrCode: hashQRCode
+            }).then(documento => {
+                db.documento.findAll({
+                    where: {
+                        id: documento.id
+                    }
+                }).then(documento => {
+                    db.campo.findAll({
+                        where: {
+                            modeloId: documento[0].modeloId
+                        }
+                    }).then(campos => {
+                        for (var key in campos) {
+                            var identificador = gerador.gerarHashPequeno();
+                            db.arquivo.create({
+                                identificador: identificador,
+                                documentoId: documento[0].id,
+                                campoId: campos[key].id
+                            }).then(arquivoAbstrato => {
+                                var arquivo = {
+                                    nome: campos[key].nome,
+                                    identificador: identificador
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+            res.send(hashQRCode);
+        });
+    });
+
+
     //busca os registros referentes a cada arquivo do documento com um indentificador
     app.get('/getCampos/:qrCodeDocumento', function (req, res) {
-
         var qrCodeDocumento = req.params.qrCodeDocumento;
-
         db.sequelize.query(`select arquivos.identificador,arquivos.arquivo,documentos.qrCode,campos.nome from arquivos,documentos,campos,modelos
         where documentos.qrCode = :qrCodeDocumento
             and documentos.id = arquivos.documentoId
@@ -95,12 +126,10 @@ module.exports = function (app) {
             });
     });
 
-
     app.post('/sendFile/:identificadorArquivo', multipartMiddle, function (req, res) {
         var identificador = req.params.identificadorArquivo;
         try {
             var extension = path.defineExtesionFile(req.files);
-
             db.arquivo.findOne({ where: { identificador: identificador } }).then(documento => { //?
                 var now = new Date();
                 var nameFile = (now.getDate().toString() + '_' + now.getHours() + '-' + now.getMinutes() + '-' + now.getSeconds() + '-Cod-' + (Math.floor(Math.random() * 1687).toString(16)));
@@ -138,7 +167,6 @@ module.exports = function (app) {
         } catch (err) {
             res.send(err);
         }
-
     });
 
     app.get('/getFile/:identificadorArquivo', function (req, res) {
@@ -156,7 +184,7 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/getFileLow/:identificadorArquivo', function (req, res) {
+   /* app.get('/getFileLow/:identificadorArquivo', function (req, res) {
         db.arquivo.findOne({
             where: {
                 identificador: req.params.identificadorArquivo
@@ -181,5 +209,5 @@ module.exports = function (app) {
                 });
             }
         });
-    });
+    });*/
 }

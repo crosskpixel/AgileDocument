@@ -1,7 +1,6 @@
 var fs = require('fs');
 
 module.exports.createDirectoryByDate = function (data, callback) {
-
     var criaDirectorioAno = function (ano, callback) {
         var existe = fs.existsSync('ARQUIVOS/Documentos/' + ano);
         if (existe) {
