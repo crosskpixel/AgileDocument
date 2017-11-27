@@ -9,7 +9,7 @@ module.exports = function (app) {
 
     //Metodo responsavel por identificar se este modelo está disponivel !
     //Method responsible for identifying if this model is available!
-    app.get('/validaCampoModelo/:idmodelo',modeloCtrl.validaCamposDoModelo);
+    app.get('/validFieldModel/:idmodelo',modeloCtrl.validaCamposDoModelo);
 
 
     //Cadastra o modelo , e atráves da url = "novoDocumento/<<identificador>>" ou "novoDocumentoString/<<identificador>>"
@@ -17,6 +17,6 @@ module.exports = function (app) {
 
     /*Register the template, and through the url = "newDocument /" identifier "" or "newDocumentoString /" "identifier"
     // it is possible to create the document !! */
-    app.post('/cadastrarmodelo',modeloCtrl.cadastrarModelo);
+    app.post('/registermodel',modeloCtrl.cadastrarModelo);
 
 }

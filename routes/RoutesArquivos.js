@@ -12,15 +12,15 @@ module.exports = function (app) {
    
     //Cadastra um documento com os campos do modelo, retorna um QRCode que deve ser scanneado pelo
     //smartphone e depois realizado um envio !!!
-    app.get('/novoDocumento/:modeloid',documentoCtrl.novoDocumento);
+    app.get('/newDocument/:modeloid',documentoCtrl.novoDocumento);
 
     //Cadastra um documento, retorna um hash da imagem QRCode, que pode ser utilizado para utilizar em
     //outros tipos de sistemas.
     // http://???,???,?,???:????/getCampos/<<hashretornado>> retorna os campos com identificadores para realizar um envio !
-    app.get('/novoDocumentoString/:modeloid',documentoCtrl.novoDocumentoString);
+    app.get('/newDocumentString/:modeloid',documentoCtrl.novoDocumentoString);
     
     //busca os todos os campos do hashQR do documento , com seus identificadores !
-    app.get('/getCampos/:qrCodeDocumento',documentoCtrl.getCamposByDocument);
+    app.get('/getFields/:qrCodeDocumento',documentoCtrl.getCamposByDocument);
 
     // é realizado o envio com os identificadores de cada campo separadamente !
     app.post('/sendFile/:identificadorArquivo', multipartMiddle,documentoCtrl.sendFileForDocument);

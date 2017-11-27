@@ -15,4 +15,4 @@ COPY . /usr/src/app
 
 cmd node app.js
 
-EXPOSE 3000
+EXPOSE 80

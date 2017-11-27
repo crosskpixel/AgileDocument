@@ -21,7 +21,6 @@ module.exports.cadastrarModelo = function (req, res) {
     var nomeModelo = req.body.nomeModelo;
     var modeloId = req.body.modeloId;
     var campos = JSON.parse(req.body.campos);
-
     db.modelo.findOne({
         where: {
             identificador: modeloId
