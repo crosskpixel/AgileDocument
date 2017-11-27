@@ -1,4 +1,5 @@
 var db = require('./../model/abs');
+var modeloCtrl = require("./../controller/ModeloController");
 
 module.exports = function (app) {
 
@@ -6,57 +7,16 @@ module.exports = function (app) {
         res.sendFile(req.ROOT_PATH + '/views/index.html');
     });
 
-
-    app.get('/validaCampoModelo/:idmodelo', function (req, res) {
-
-        var idModelo_verify = req.params.idmodelo;
-        idModelo_verify = idModelo_verify.toLowerCase();
-
-        db.modelo.findOne({
-            where: {
-                identificador: idModelo_verify
-            }
-        }).then(result => {
-            if (result == null) {
-                res.send('true');
-            } else {
-                res.send('false');
-            }
-        });
-    });
-
-    app.post('/cadastrarmodelo', function (req, res) {
-        console.log(req.body);
-
-        var nomeModelo = req.body.nomeModelo;
-        var modeloId = req.body.modeloId;
-        var campos = JSON.parse(req.body.campos);
+    //Metodo responsavel por identificar se este modelo está disponivel !
+    //Method responsible for identifying if this model is available!
+    app.get('/validaCampoModelo/:idmodelo',modeloCtrl.validaCamposDoModelo);
 
 
-        console.log(nomeModelo);
-        console.log(modeloId);
+    //Cadastra o modelo , e atráves da url = "novoDocumento/<<identificador>>" ou "novoDocumentoString/<<identificador>>"
+    //é possivel criar o documento !!
 
-        db.modelo.create({
-            identificador: modeloId,
-            nome: nomeModelo
-        }).then(modelo => {
-            for (var key in campos) {
-                var campo = campos[key];
-                db.campo.create({
-                    modeloId: modelo.id,
-                    nome: campos[key]
-                });
-            }
-        });
-
-        res.send('true');
-    });
-
-
-    app.get("/lala",function(req,res){
-        console.log(req.query.campo);
-        
-        res.send(req.params.lala);
-    });
+    /*Register the template, and through the url = "newDocument /" identifier "" or "newDocumentoString /" "identifier"
+    // it is possible to create the document !! */
+    app.post('/cadastrarmodelo',modeloCtrl.cadastrarModelo);
 
 }

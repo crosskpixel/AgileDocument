@@ -9,7 +9,6 @@ module.exports = function (sequelize, Sequelize) {
         Arquivo.belongsTo(model.documento);
         Arquivo.belongsTo(model.campo);
     }
-
     return Arquivo;
 
 }

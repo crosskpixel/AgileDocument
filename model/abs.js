@@ -1,11 +1,11 @@
 var path = require('path');
 var fs = require('fs');
 var Sequelize = require('sequelize');
-const sequelize = new Sequelize('agile', 'agileuser', 'agilepassword', {	//configuracao do banco de dados
+const sequelize = new Sequelize('agileDataBase', 'agileuser', 'agilepassword', {	//configuracao do banco de dados
     host: 'agileDB',
     dialect: 'mysql',
     pool: {
-        max: 5,
+        max: 20,
         min: 0,
         idle: 10000
     }

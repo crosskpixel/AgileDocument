@@ -31,8 +31,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-
 var db = require('./model/abs.js');
 db.sequelize.sync({ force: false }).then(() => {
   console.log('Created');
@@ -41,6 +39,7 @@ db.sequelize.sync({ force: false }).then(() => {
 load('controller')
   .then('routes')
   .into(app);
+
 
   app.get("/connect",function(req,res){
       res.send("true");
@@ -53,6 +52,6 @@ load('controller')
   });
 
 // error handler
-app.listen(3000, function () {
-  console.log('macImages port>3000');
+app.listen(80, function () {
+  console.log('macImages port>80');
 });

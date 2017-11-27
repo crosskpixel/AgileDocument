@@ -50,8 +50,8 @@ module.exports.createDirectoryByDate = function (data, callback) {
 
 
 module.exports.defineExtesionFile = function (reqFiles) {
-    console.log(reqFiles);
-    var type = reqFiles.file.type;
+    var name = Object.keys(reqFiles)[0];
+    var type = reqFiles[name].type;
     if (type === 'image/jpeg') {
         return '.jpg';
     } else if (type === 'image/png') {
