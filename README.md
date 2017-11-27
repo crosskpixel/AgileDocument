@@ -1,21 +1,21 @@
-This project aims to expedite the registration of fiches, registers, documentation, etc., through a ration and dynamics
-creation of document templates.
+<h1>This project aims to expedite the registration of fiches, registers, documentation, etc., through a ration and dynamics
+creation of document templates.</h1>
  
  <h3>Requirements for the server:</h3>
  
-DualCore processor or higher
-1GB of RAM
-20GB + (varies with use)
-local connection
+DualCore processor or higher <br>
+1GB of RAM <br>
+20GB + (varies with use) <br>
+local connection <br>
  
 <h3>Requirements for your smartphone</h3>
  
-Android 6+
-2GB of RAM
-20mb free
-Camera Access
-Access to files
-Local Wifi connection
+Android 6+ <br>
+2GB of RAM <br>
+20mb free <br>
+Camera Access <br>
+Access to files <br>
+Local Wifi connection <br>
 
 <h4>Application URLs</h4>
  
@@ -31,7 +31,7 @@ Local Wifi connection
  Entering http://#ipAddressServerAgileDocument/getFields/#idModelDocument <br>
  you have returned the fields of these documents in JSON.
  
-Example:
+<h5>Example</h5>
 
 Response JSON: 
 [{"identificador":"9a3584e91385084e0b02f04c6be","arquivo":null,"qrCode":"8e4e309fd1d14893ddbeebe2e038","nome":"RG"},
@@ -110,4 +110,4 @@ Android >> <br>
  https://github.com/hkk595/Resizer <br>
 
  
- This project is free , Thanks for use.
+ <h1>This project is free , Thanks for use.</h1>
