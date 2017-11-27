@@ -44,8 +44,8 @@ Response JSON:
 {"identificador":"8629387cad8318b6bc279f55dd3","arquivo":null,"qrCode":"8e4e309fd1d14893ddbeebe2e038","nome":"CERTIDÂO DE NASCIMENTO"}]
  
  if "arquivo" is null, there is no image attached to this record, it can be used
-http://<<ipAddressServerAgileDocument >>/sendFile/<<DocumentReaderDocument>> POST IMAGE
-so it will make the link, for image visualization use http://<< ipAddressServerAgileDocument>>/getFile/<< DocumentID_Document >> GET
+http://#ipAddressServerAgileDocument/sendFile/#DocumentReaderDocument POST IMAGE
+so it will make the link, for image visualization use http://#ipAddressServerAgileDocument/getFile/#DocumentID_Document >> GET
 
 
 <h2>How to Configure AgileDocument</h2>
@@ -53,6 +53,7 @@ so it will make the link, for image visualization use http://<< ipAddressServerA
 start a database in docker
 https://hub.docker.com/_/mariadb/
 
+<code>
 docker run --name agileDB \
  -e MYSQL_USER=agileuser \
  -e MYSQL_PASSWORD=agilepassword \
@@ -62,6 +63,8 @@ docker run --name agileDB \
  -e MYSQL_ALLOW_EMPTY_PASSWORD=no \
  -p 3306:3306 -d mariadb
  
+ </code>
+ 
   or on a local machine! remember to change the database settings in the model/abs.js folder
   
  
@@ -69,8 +72,9 @@ docker run --name agileDB \
  Look if the settings of "/model/abs.js" match the created database configuration!
  
  Example setup abs.js
-const sequelize = new Sequelize('<<nameDataBase>>', '<<user>>', '<<password>>', {	//configuracao do banco de dados
-    host: '<<host>>',
+ <code>
+const sequelize = new Sequelize('#nameDataBase', '#user', '#password', {	//config
+    host: '#host',
     dialect: 'mysql',
     pool: {
         max: 20,
@@ -78,18 +82,23 @@ const sequelize = new Sequelize('<<nameDataBase>>', '<<user>>', '<<password>>', 
         idle: 10000
     }
 });
+</code>
 
 <h4>After that, start creating the application's Docker image</h4>
- 
+ <code>
  docker build -t agileapp .
-
+ </code>
+<br>
+ <code>
 docker run --name agileapplication --link agileDB:agileDB -p 5000:3000 -d agileapp
-//the name of the docker should be the same as that declared in abs.js [host]
-//agileDB will be the host that will also be present in the abs.js settings
+</code>
+
+the name of the docker should be the same as that declared in abs.js [host] <br>
+agileDB will be the host that will also be present in the abs.js settings
 
 
 To use AgileDocument, download the app
-Entering http://<<ipAddressServerAgileDocument>>/install
+Entering http://#ipAddressServerAgileDocument/install
 
  or create and change the project as desired.
 
