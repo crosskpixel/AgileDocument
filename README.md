@@ -1,6 +1,5 @@
 <h1>AgileDocument</h1>
 <br>
-<br>
 <h3>This project aims to expedite the registration of fiches, registers, documentation, etc., through a ration and dynamics
 creation of document templates.</h3>
  
@@ -20,7 +19,7 @@ Camera Access <br>
 Access to files <br>
 Local Wifi connection <br>
 
-<h4>Application URLs</h4>
+<h3>Application URLs</h3>
  
  Entering http://#ipAddressServerAgileDocument <br>
  it is possible to perform the registration of document templates.
@@ -34,7 +33,7 @@ Local Wifi connection <br>
  Entering http://#ipAddressServerAgileDocument/getFields/#idModelDocument <br>
  you have returned the fields of these documents in JSON.
  
-<h5>Example</h5>
+<h4>Example</h4>
 
 Response JSON: 
 [{"identificador":"9a3584e91385084e0b02f04c6be","arquivo":null,"qrCode":"8e4e309fd1d14893ddbeebe2e038","nome":"RG"},
@@ -54,14 +53,14 @@ start a database in docker
 https://hub.docker.com/_/mariadb/
 
 <code>
-docker run --name agileDB \
- -e MYSQL_USER=agileuser \
- -e MYSQL_PASSWORD=agilepassword \
- -e MYSQL_DATABASE=agileDataBase \
- -e MYSQL_ROOT_PASSWORD=agilerootz \
- -e MYSQL_RANDOM_ROOT_PASSWORD=no \
- -e MYSQL_ALLOW_EMPTY_PASSWORD=no \
- -p 3306:3306 -d mariadb
+docker run --name agileDB \ <br>
+ -e MYSQL_USER=agileuser \ <br>
+ -e MYSQL_PASSWORD=agilepassword \ <br>
+ -e MYSQL_DATABASE=agileDataBase \ <br>
+ -e MYSQL_ROOT_PASSWORD=agilerootz \ <br>
+ -e MYSQL_RANDOM_ROOT_PASSWORD=no \ <br>
+ -e MYSQL_ALLOW_EMPTY_PASSWORD=no \ <br>
+ -p 3306:3306 -d mariadb <br>
  
  </code>
  
@@ -71,7 +70,7 @@ docker run --name agileDB \
  Enter folder the project AgileDocument 
  Look if the settings of "/model/abs.js" match the created database configuration!
  
- Example setup abs.js
+ Example setup abs.js <br>
  <code>
 const sequelize = new Sequelize('#nameDataBase', '#user', '#password', {	//config
     host: '#host',
@@ -123,3 +122,4 @@ Android >> <br>
 
  
  <h1>This project is free , Thanks for use.</h1>
+ <code>developed by Igor Pancheski <br> igorpancheskilinux@icloud.com </code>
