@@ -2,6 +2,9 @@
 <br>
 <h3>This project aims to expedite the registration of fiches, registers, documentation, etc., through a ration and dynamics
 creation of document templates.</h3>
+<br>
+<h5>Project Android: <a href="https://github.com/crosskpixel/AgileDocumentAndroid"> AgileDocumentAndroid </a> <h5>
+
  
  <h3>Requirements for the server:</h3>
  
