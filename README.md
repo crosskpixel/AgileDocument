@@ -1,5 +1,8 @@
-<h1>This project aims to expedite the registration of fiches, registers, documentation, etc., through a ration and dynamics
-creation of document templates.</h1>
+<h1>AgileDocument</h1>
+<br>
+<br>
+<h3>This project aims to expedite the registration of fiches, registers, documentation, etc., through a ration and dynamics
+creation of document templates.</h3>
  
  <h3>Requirements for the server:</h3>
  
