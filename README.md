@@ -1,15 +1,14 @@
-# AgileDocument
 This project aims to expedite the registration of fiches, registers, documentation, etc., through a ration and dynamics
 creation of document templates.
  
-Requirements for the server:
+ <h3>Requirements for the server:</h3>
  
 DualCore processor or higher
 1GB of RAM
 20GB + (varies with use)
 local connection
  
-Requirements for your smartphone
+<h3>Requirements for your smartphone</h3>
  
 Android 6+
 2GB of RAM
@@ -18,18 +17,18 @@ Camera Access
 Access to files
 Local Wifi connection
 
-Application URLs
+<h4>Application URLs</h4>
  
- Entering http://<<ipAddressServerAgileDocument>>
+ Entering http://#ipAddressServerAgileDocument <br>
  it is possible to perform the registration of document templates.
  
- Entering http://<<ipAddressServerAgileDocument>>/newDocument/<<idModelDocument>>
+ Entering http://#ipAddressServerAgileDocument/newDocument/#idModelDocument <br>
  it will respond to a QRCode image, being it identifier of the same.
  
- Entering http://<<ipAddressServerAgileDocument>>/newDocumentString/<<idModelDocument>>
+ Entering http://#ipAddressServerAgileDocument/newDocumentString/#idModelDocument? <br>
  it will respond to the hash QRcode, being it identifier of the same one.
  
- Entering http://<<ipAddressServerAgileDocument>>/getFields/<<idModelDocument>>
+ Entering http://#ipAddressServerAgileDocument/getFields/#idModelDocument <br>
  you have returned the fields of these documents in JSON.
  
 Example:
@@ -46,7 +45,7 @@ http://<<ipAddressServerAgileDocument >>/sendFile/<<DocumentReaderDocument>> POS
 so it will make the link, for image visualization use http://<< ipAddressServerAgileDocument>>/getFile/<< DocumentID_Document >> GET
 
 
-How to Configure AgileDocument
+<h2>How to Configure AgileDocument</h2>
 
 start a database in docker
 https://hub.docker.com/_/mariadb/
@@ -77,7 +76,7 @@ const sequelize = new Sequelize('<<nameDataBase>>', '<<user>>', '<<password>>', 
     }
 });
 
-After that, start creating the application's Docker image
+<h4>After that, start creating the application's Docker image</h4>
  
  docker build -t agileapp .
 
@@ -91,24 +90,24 @@ Entering http://<<ipAddressServerAgileDocument>>/install
 
  or create and change the project as desired.
 
-What was it used
+<h3>What was it used</h3>
 
 NodeJS >>
-https://github.com/expressjs/connect-multiparty
-http://expressjs.com
-https://www.npmjs.com/package/qrcode-npm
-http://docs.sequelizejs.com/
+https://github.com/expressjs/connect-multiparty <br>
+http://expressjs.com <br>
+https://www.npmjs.com/package/qrcode-npm <br>
+http://docs.sequelizejs.com/ <br>
  
- DataBase >>
- https://mariadb.org/
+ DataBase >> <br>
+ https://mariadb.org/ <br>
  
-Android >>
- https://github.com/square/okhttp
- https://github.com/google/gson
- https://github.com/dm77/barcodescanner
- https://github.com/Yalantis/uCrop
- http://loopj.com/android-async-http/
- https://github.com/hkk595/Resizer
+Android >> <br>
+ https://github.com/square/okhttp <br>
+ https://github.com/google/gson <br>
+ https://github.com/dm77/barcodescanner <br>
+ https://github.com/Yalantis/uCrop <br>
+ http://loopj.com/android-async-http/ <br>
+ https://github.com/hkk595/Resizer <br>
 
  
  This project is free , Thanks for use.
