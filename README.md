@@ -122,4 +122,5 @@ Android >> <br>
 
  
  <h1>This project is free , Thanks for use.</h1>
- <code>developed by Igor Pancheski <br> igorpancheskilinux@icloud.com </code>
+ <code>developed by Igor Pancheski  </code><br>
+ <code>igorpancheskilinux@icloud.com</code>
