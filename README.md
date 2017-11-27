@@ -98,6 +98,7 @@ agileDB will be the host that will also be present in the abs.js settings
 
 To use AgileDocument, download the app
 Entering http://#ipAddressServerAgileDocument/install
+Android Project: <a href="https://github.com/crosskpixel/AgileDocumentAndroid" > AgileDocumentAndroid </a>
 
  or create and change the project as desired.
 
