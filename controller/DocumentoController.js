@@ -6,6 +6,8 @@ var multipartMiddle = multipart();
 var path = require('./../utils/GeradorDePastas.js');
 var fs = require('fs');
 var qrCode = require('qrcode-npm');
+var { files } = require("./../configapp.json");
+let { directory } = files;
 
 module.exports.novoDocumento = (req, res) => {
     var identificadorModelo = req.params.modeloid;
@@ -138,12 +140,14 @@ module.exports.sendFileForDocument = (req, res) => {
                     if (documento === null) {
                         res.send('Documento não encontrado');
                     } else {
-                        var destDestiny = '/ARQUIVOS/Documentos/' + now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + nameFile + extension;
+                        var destDestiny = (directory == "ARQUIVOS/Documentos/" ? req.ROOT_PATH + "/ARQUIVOS/Documentos/" : directory) + now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + nameFile + extension;
 
+                        //'/ARQUIVOS/Documentos/'
                         var nameCampo = Object.keys(req.files)[0]; //pega primeiro registro json,que no caso sera o arquivo !
                         var source = fs.createReadStream(req.files[nameCampo].path);
-                        var dest = fs.createWriteStream(req.ROOT_PATH + destDestiny);
 
+                        // var dest = fs.createWriteStream(req.ROOT_PATH + destDestiny);
+                        var dest = fs.createWriteStream(destDestiny);
                         source.pipe(dest);
                         source.on('end', () => {
                             console.log('COPY SUCCESSFULL !!!!');
@@ -178,7 +182,7 @@ module.exports.getFileByIdHash = (req, res) => {
         if (arquivo == null) {
             res.send('false');
         } else {
-            res.sendFile(req.ROOT_PATH + arquivo.arquivo);
+            res.sendFile(arquivo.arquivo);
         }
     });
 }

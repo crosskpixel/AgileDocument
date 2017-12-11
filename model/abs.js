@@ -1,8 +1,10 @@
-let {database,user,password,dialect,host} = require("./../configdb.json");
+let { database } = require("./../configapp.json");
+let { nameDatabase, user, password, dialect, host } = database;
+
 var path = require('path');
 var fs = require('fs');
 var Sequelize = require('sequelize');
-const sequelize = new Sequelize(database,user,password, {	//configuracao do banco de dados
+const sequelize = new Sequelize(nameDatabase, user, password, {	//configuracao do banco de dados
     host: host,
     dialect: dialect,
     pool: {

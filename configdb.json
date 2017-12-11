@@ -1,8 +1,0 @@
-{
-    "database":"yourDatabase",
-    "user":"yourUser",
-    "password":"yourPass",
-    "host":"yourHost",
-    "dialect":"mysql"  ,
-    "__comment":"// dialect = 'mysql'|'sqlite'|'postgres'|'mssql'"
-}

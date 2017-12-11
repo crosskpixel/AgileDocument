@@ -1,0 +1,14 @@
+{
+    "database": {
+        "nameDatabase": "yourDatabaseName",
+        "user": "yourUser",
+        "password": "yourPassword",
+        "host": "yourServer",
+        "dialect": "mysql",
+        "__comment": "// dialect = 'mysql'|'sqlite'|'postgres'|'mssql'"
+    },
+    "files": {
+        "directory": "ARQUIVOS/Documentos/",
+        "__comment_example": "example:C:/ARQUIVOS/ default is :  'ARQUIVOS/Documentos/' "
+    }
+}

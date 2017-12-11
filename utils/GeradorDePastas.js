@@ -1,13 +1,15 @@
+var { files } = require("./../configapp.json");
+var { directory } = files;
 var fs = require('fs');
 
 module.exports.createDirectoryByDate = (data, callback) => {
     var criaDirectorioAno = (ano, callback) => {
-        var existe = fs.existsSync('ARQUIVOS/Documentos/' + ano);
+        var existe = fs.existsSync(directory + ano);
         if (existe) {
             callback(true);
         } else {
-            fs.mkdirSync('ARQUIVOS/Documentos/' + ano);
-            var existe = fs.existsSync('ARQUIVOS/Documentos/' + ano);
+            fs.mkdirSync(directory + ano);
+            var existe = fs.existsSync(directory + ano);
             if (existe) {
                 callback(true);
             } else {
@@ -18,12 +20,12 @@ module.exports.createDirectoryByDate = (data, callback) => {
 
     var criaDirectorioMes = (ano, mes, callback) => {
         var existe = null;
-        existe = fs.existsSync('ARQUIVOS/Documentos/' + ano + '/' + mes);
+        existe = fs.existsSync(directory + ano + '/' + mes);
         if (existe) {
             callback(true);
         } else {
-            fs.mkdirSync('ARQUIVOS/Documentos/' + ano + '/' + mes);
-            existe = fs.existsSync('ARQUIVOS/Documentos/' + ano + '/' + mes);
+            fs.mkdirSync(directory + ano + '/' + mes);
+            existe = fs.existsSync(directory + ano + '/' + mes);
             if (existe) {
                 callback(true);
             } else {
