@@ -67,23 +67,22 @@ docker run --name agileDB \ <br>
  
  </code>
  
-  or on a local machine! remember to change the database settings in the model/abs.js folder
+  or on a local machine! remember to change the database settings in the configdb.json folder
   
  
  Enter folder the project AgileDocument 
- Look if the settings of "/model/abs.js" match the created database configuration!
+ Look if the settings of "/configdb.json" match the created database configuration!
  
- Example setup abs.js <br>
+ Example setup configdb.json <br>
  <code>
-const sequelize = new Sequelize('#nameDataBase', '#user', '#password', {	//config
-    host: '#host',
-    dialect: 'mysql',
-    pool: {
-        max: 20,
-        min: 0,
-        idle: 10000
-    }
-});
+{
+    "database":"yourDatabase",
+    "user":"yourUser",
+    "password":"yourPass",
+    "host":"yourHost",
+    "dialect":"mysql"  ,
+    "__comment":"// dialect = 'mysql'|'sqlite'|'postgres'|'mssql'"
+}
 </code>
 
 <h4>After that, start creating the application's Docker image</h4>

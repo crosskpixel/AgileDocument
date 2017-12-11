@@ -1,9 +1,10 @@
+let {database,user,password,dialect,host} = require("./../configdb.json");
 var path = require('path');
 var fs = require('fs');
 var Sequelize = require('sequelize');
-const sequelize = new Sequelize('agileDB', 'agileuser', 'agilepassword', {	//configuracao do banco de dados
-    host: 'localhost',
-    dialect: 'mysql',
+const sequelize = new Sequelize(database,user,password, {	//configuracao do banco de dados
+    host: host,
+    dialect: dialect,
     pool: {
         max: 20,
         min: 0,

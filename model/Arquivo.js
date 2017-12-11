@@ -1,11 +1,11 @@
-module.exports = function (sequelize, Sequelize) {
+module.exports = (sequelize, Sequelize) => {
 
     var Arquivo = sequelize.define('arquivo', {
         arquivo: Sequelize.STRING,
         identificador: Sequelize.STRING
     });
 
-    Arquivo.associate = function (model) {
+    Arquivo.associate = (model) => {
         Arquivo.belongsTo(model.documento);
         Arquivo.belongsTo(model.campo);
     }

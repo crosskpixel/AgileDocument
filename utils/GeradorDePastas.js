@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-module.exports.createDirectoryByDate = function (data, callback) {
-    var criaDirectorioAno = function (ano, callback) {
+module.exports.createDirectoryByDate = (data, callback) => {
+    var criaDirectorioAno = (ano, callback) => {
         var existe = fs.existsSync('ARQUIVOS/Documentos/' + ano);
         if (existe) {
             callback(true);
@@ -16,7 +16,7 @@ module.exports.createDirectoryByDate = function (data, callback) {
         }
     }
 
-    var criaDirectorioMes = function (ano, mes, callback) {
+    var criaDirectorioMes = (ano, mes, callback) => {
         var existe = null;
         existe = fs.existsSync('ARQUIVOS/Documentos/' + ano + '/' + mes);
         if (existe) {
@@ -49,7 +49,7 @@ module.exports.createDirectoryByDate = function (data, callback) {
 }
 
 
-module.exports.defineExtesionFile = function (reqFiles) {
+module.exports.defineExtesionFile = (reqFiles) => {
     var name = Object.keys(reqFiles)[0];
     var type = reqFiles[name].type;
     if (type === 'image/jpeg') {

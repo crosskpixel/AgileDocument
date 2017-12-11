@@ -1,6 +1,6 @@
 var db = require('./../model/abs');
 
-module.exports.validaCamposDoModelo = function (req, res) {
+module.exports.validaCamposDoModelo = (req, res) => {
     var idModelo_verify = req.params.idmodelo;
     idModelo_verify = idModelo_verify.toLowerCase();
 
@@ -17,7 +17,7 @@ module.exports.validaCamposDoModelo = function (req, res) {
     });
 }
 
-module.exports.cadastrarModelo = function (req, res) {
+module.exports.cadastrarModelo = (req, res) => {
     var nomeModelo = req.body.nomeModelo;
     var modeloId = req.body.modeloId;
     var campos = JSON.parse(req.body.campos);

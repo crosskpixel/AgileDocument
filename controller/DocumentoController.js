@@ -7,7 +7,7 @@ var path = require('./../utils/GeradorDePastas.js');
 var fs = require('fs');
 var qrCode = require('qrcode-npm');
 
-module.exports.novoDocumento = function (req, res) {
+module.exports.novoDocumento = (req, res) => {
     var identificadorModelo = req.params.modeloid;
     db.modelo.findAll({
         where: {
@@ -16,50 +16,49 @@ module.exports.novoDocumento = function (req, res) {
     }).then(modelo => {
         if (modelo.length == 0) {
             res.send("false");
-        }
-        var idModelo = modelo[0].id;
-        var hashQRCode = gerador.gerarHashPequeno();
+        } else {
+            var idModelo = modelo[0].id;
+            var hashQRCode = gerador.gerarHashPequeno();
 
-        db.documento.create({
-            modeloId: idModelo,
-            qrCode: hashQRCode
-        }).then(documento => {
-            db.documento.findAll({
-                where: {
-                    id: documento.id
-                }
+            db.documento.create({
+                modeloId: idModelo,
+                qrCode: hashQRCode
             }).then(documento => {
-                db.campo.findAll({
+                db.documento.findAll({
                     where: {
-                        modeloId: documento[0].modeloId
+                        id: documento.id
                     }
-                }).then(campos => {
-                    for (var key in campos) {
-                        var identificador = gerador.gerarHashPequeno();
-                        db.arquivo.create({
-                            identificador: identificador,
-                            documentoId: documento[0].id,
-                            campoId: campos[key].id
-                        }).then(arquivoAbstrato => {
-                            var arquivo = {
-                                nome: campos[key].nome,
-                                identificador: identificador
-                            }
-                        });
-                    }
+                }).then(documento => {
+                    db.campo.findAll({
+                        where: {
+                            modeloId: documento[0].modeloId
+                        }
+                    }).then(campos => {
+                        for (var key in campos) {
+                            var identificador = gerador.gerarHashPequeno();
+                            db.arquivo.create({
+                                identificador: identificador,
+                                documentoId: documento[0].id,
+                                campoId: campos[key].id
+                            });
+                        }
+                    });
                 });
             });
-        });
-        var qr = qrCode.qrcode(5, 'M');
-        qr.addData(hashQRCode);
-        qr.make();
 
-        var htmlQRCODE = qr.createImgTag(6);
-        res.send(htmlQRCODE);
+            var qr = qrCode.qrcode(5, 'M');
+            qr.addData(hashQRCode);
+            qr.make();
+
+            var htmlQRCODE = qr.createImgTag(6);
+            res.send(htmlQRCODE);
+        }
+
+
     });
 }
 
-module.exports.novoDocumentoString = function (req, res) {
+module.exports.novoDocumentoString = (req, res) => {
     try {
         var identificadorModelo = req.params.modeloid;
         db.modelo.findAll({
@@ -93,11 +92,6 @@ module.exports.novoDocumentoString = function (req, res) {
                                 identificador: identificador,
                                 documentoId: documento[0].id,
                                 campoId: campos[key].id
-                            }).then(arquivoAbstrato => {
-                                var arquivo = {
-                                    nome: campos[key].nome,
-                                    identificador: identificador
-                                }
                             });
                         }
                     });
@@ -110,7 +104,7 @@ module.exports.novoDocumentoString = function (req, res) {
     }
 }
 
-module.exports.getCamposByDocument = function (req, res) {
+module.exports.getCamposByDocument = (req, res) => {
     var qrCodeDocumento = req.params.qrCodeDocumento;
     db.sequelize.query(`select arquivos.identificador,arquivos.arquivo,documentos.qrCode,campos.nome from arquivos,documentos,campos,modelos
     where documentos.qrCode = :qrCodeDocumento
@@ -130,7 +124,7 @@ module.exports.getCamposByDocument = function (req, res) {
         });
 }
 
-module.exports.sendFileForDocument = function (req, res) {
+module.exports.sendFileForDocument = (req, res) => {
 
     var identificador = req.params.identificadorArquivo;
     try {
@@ -139,20 +133,19 @@ module.exports.sendFileForDocument = function (req, res) {
             var now = new Date();
             var nameFile = (now.getDate().toString() + '_' + now.getHours() + '-' + now.getMinutes() + '-' + now.getSeconds() + '-Cod-' + (Math.floor(Math.random() * 1687).toString(16)));
 
-            path.createDirectoryByDate(now, function (result) {
+            path.createDirectoryByDate(now, (result) => {
                 if (result) {
                     if (documento === null) {
                         res.send('Documento não encontrado');
                     } else {
                         var destDestiny = '/ARQUIVOS/Documentos/' + now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + nameFile + extension;
 
-
                         var nameCampo = Object.keys(req.files)[0]; //pega primeiro registro json,que no caso sera o arquivo !
                         var source = fs.createReadStream(req.files[nameCampo].path);
                         var dest = fs.createWriteStream(req.ROOT_PATH + destDestiny);
 
                         source.pipe(dest);
-                        source.on('end', function () {
+                        source.on('end', () => {
                             console.log('COPY SUCCESSFULL !!!!');
                             db.arquivo.update({
                                 arquivo: destDestiny
@@ -163,7 +156,7 @@ module.exports.sendFileForDocument = function (req, res) {
                                 });
                             res.send("true");
                         });
-                        source.on('error', function (err) {
+                        source.on('error', (err) => {
                             console.log(err);
                             res.send(err);
                         });
@@ -176,13 +169,12 @@ module.exports.sendFileForDocument = function (req, res) {
     }
 }
 
-module.exports.getFileByIdHash = function (req, res) {
+module.exports.getFileByIdHash = (req, res) => {
     db.arquivo.findOne({
         where: {
             identificador: req.params.identificadorArquivo
         }
     }).then(arquivo => {
-        console.log(arquivo);
         if (arquivo == null) {
             res.send('false');
         } else {
