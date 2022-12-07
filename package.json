@@ -10,7 +10,7 @@
     "connect-multiparty": "*",
     "cors": "*",
     "ejs": "^2.5.7",
-    "express": "~4.15.2",
+    "express": "~4.17.3",
     "express-load": "*",
     "lodash": "*",
     "mysql2": "*",
